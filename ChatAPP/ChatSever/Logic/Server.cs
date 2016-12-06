@@ -57,11 +57,11 @@ namespace ChatSever.Logic
         {
             if (connections[tcpUser] != null)
             {
-                users.Remove(connections[tcpUser]);
-                connections.Remove(tcpUser);
-
                 Console.WriteLine("[{0}] " + connections[tcpUser] + " has disconnected", DateTime.Now);
                 SendAdminMessage(connections[tcpUser] + " has left us");
+
+                users.Remove(connections[tcpUser]);
+                connections.Remove(tcpUser);
             }
         }
 
