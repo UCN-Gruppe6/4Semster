@@ -14,7 +14,7 @@ using System.Threading;
 
 namespace ChatClient
 {
-    public partial class PublicRoom : Form
+    public partial class ChatRoom : Form
     {
         #region Fields and Properties
 
@@ -62,6 +62,8 @@ namespace ChatClient
             textIPAddrass.Enabled = false;
             textUserName.Enabled = false;
             textMegsse.Enabled = true;
+            textToUser.Enabled = true;
+            textPrivateMessage.Enabled = true;
             buttonSend.Enabled = true;
             buttonConnect.Text = "Disconnect";
 
@@ -81,6 +83,8 @@ namespace ChatClient
             textIPAddrass.Enabled = true;
             textUserName.Enabled = true;
             textMegsse.Enabled = false;
+            textPrivateMessage.Enabled = false;
+            textToUser.Enabled = false;
             buttonSend.Enabled = false;
             buttonConnect.Text = "Connect";
 
@@ -132,7 +136,14 @@ namespace ChatClient
         // Sender beskeden ved at have kliket på knappen "Send". 
         private void buttonSend_Click(object sender, EventArgs e)
         {
-            SendMessage();
+            if(textToUser.Text != "" && textPrivateMessage.Text != "")
+            {
+                SendPrivateMessage();
+            }
+            else
+            {
+                SendMessage();
+            }
         }
 
         //Sender beskeden ved at have kliket enter.
@@ -156,9 +167,21 @@ namespace ChatClient
             textMegsse.Text = "";
         }
 
+        // Den private pesked der bliver sendt.
+        private void SendPrivateMessage()
+        {
+            if(textPrivateMessage.Lines.Length >= 1)
+            {
+                swSender.WriteLine(textPrivateMessage.Text);
+                swSender.Flush();
+                textPrivateMessage.Lines = null;
+            }
+            textPrivateMessage.Text = "";
+        }
+
         #endregion
 
-        public PublicRoom()
+        public ChatRoom()
         {
             Application.ApplicationExit += new EventHandler(OnApplicationExit);
             InitializeComponent();

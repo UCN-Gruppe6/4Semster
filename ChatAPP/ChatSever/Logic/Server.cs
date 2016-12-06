@@ -138,6 +138,43 @@ namespace ChatSever.Logic
             }
         }
 
+        // Sender en private besked til en bestemt bruger. 
+        private static void SendPrivateMessage(string From, string Message, string strTo)
+        {
+            StreamWriter swSenderSender;
+
+            e = new StatusChangedEventArgs("To: " + strTo + " : " + Message);
+            OnStatusChanged(e);
+
+            TcpClient[] tcpClients = new TcpClient[Server.users.Count];
+            Server.users.Values.CopyTo(tcpClients, 0);
+
+            for(int i = 0; i < tcpClients.Length; i++)
+            {
+                if((Message.Trim() == "" || tcpClients[i] == null))
+                {
+                    continue;
+                }
+
+                if (users.Equals(strTo))
+                {
+                    swSenderSender = new StreamWriter(tcpClients[i].GetStream());
+
+                    try
+                    {
+                        swSenderSender = new StreamWriter(tcpClients[i].GetStream());
+                        swSenderSender.WriteLine(From + ":" + Message);
+                        swSenderSender.Flush();
+                        swSenderSender = null;
+                    }
+                    catch
+                    {
+                        RemoveUser(tcpClients[i]);
+                    }
+                }
+            }
+        }
+
         #endregion
 
         // Stater på at lytte efter forbenlser.

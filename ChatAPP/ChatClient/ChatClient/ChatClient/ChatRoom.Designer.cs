@@ -1,6 +1,6 @@
 ﻿namespace ChatClient
 {
-    partial class PublicRoom
+    partial class ChatRoom
     {
         /// <summary>
         /// Required designer variable.
@@ -36,12 +36,16 @@
             this.textChatLog = new System.Windows.Forms.TextBox();
             this.textMegsse = new System.Windows.Forms.TextBox();
             this.buttonSend = new System.Windows.Forms.Button();
+            this.LableTo = new System.Windows.Forms.Label();
+            this.textToUser = new System.Windows.Forms.TextBox();
+            this.labelPmessage = new System.Windows.Forms.Label();
+            this.textPrivateMessage = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // buttonConnect
             // 
             this.buttonConnect.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonConnect.Location = new System.Drawing.Point(231, 33);
+            this.buttonConnect.Location = new System.Drawing.Point(269, 33);
             this.buttonConnect.Name = "buttonConnect";
             this.buttonConnect.Size = new System.Drawing.Size(86, 27);
             this.buttonConnect.TabIndex = 0;
@@ -64,7 +68,7 @@
             // 
             this.textIPAddrass.Location = new System.Drawing.Point(92, 8);
             this.textIPAddrass.Name = "textIPAddrass";
-            this.textIPAddrass.Size = new System.Drawing.Size(129, 20);
+            this.textIPAddrass.Size = new System.Drawing.Size(171, 20);
             this.textIPAddrass.TabIndex = 2;
             // 
             // UserName
@@ -81,7 +85,7 @@
             // 
             this.textUserName.Location = new System.Drawing.Point(92, 37);
             this.textUserName.Name = "textUserName";
-            this.textUserName.Size = new System.Drawing.Size(129, 20);
+            this.textUserName.Size = new System.Drawing.Size(171, 20);
             this.textUserName.TabIndex = 4;
             // 
             // textChatLog
@@ -92,7 +96,7 @@
             this.textChatLog.Name = "textChatLog";
             this.textChatLog.ReadOnly = true;
             this.textChatLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textChatLog.Size = new System.Drawing.Size(302, 277);
+            this.textChatLog.Size = new System.Drawing.Size(340, 277);
             this.textChatLog.TabIndex = 5;
             // 
             // textMegsse
@@ -100,14 +104,14 @@
             this.textMegsse.Enabled = false;
             this.textMegsse.Location = new System.Drawing.Point(15, 349);
             this.textMegsse.Name = "textMegsse";
-            this.textMegsse.Size = new System.Drawing.Size(206, 20);
+            this.textMegsse.Size = new System.Drawing.Size(248, 20);
             this.textMegsse.TabIndex = 6;
             // 
             // buttonSend
             // 
             this.buttonSend.Enabled = false;
             this.buttonSend.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonSend.Location = new System.Drawing.Point(231, 347);
+            this.buttonSend.Location = new System.Drawing.Point(269, 349);
             this.buttonSend.Name = "buttonSend";
             this.buttonSend.Size = new System.Drawing.Size(86, 23);
             this.buttonSend.TabIndex = 7;
@@ -115,11 +119,51 @@
             this.buttonSend.UseVisualStyleBackColor = true;
             this.buttonSend.Click += new System.EventHandler(this.buttonSend_Click);
             // 
-            // PublicRoom
+            // LableTo
+            // 
+            this.LableTo.AutoSize = true;
+            this.LableTo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LableTo.Location = new System.Drawing.Point(12, 380);
+            this.LableTo.Name = "LableTo";
+            this.LableTo.Size = new System.Drawing.Size(24, 15);
+            this.LableTo.TabIndex = 8;
+            this.LableTo.Text = "To:";
+            // 
+            // textToUser
+            // 
+            this.textToUser.Enabled = false;
+            this.textToUser.Location = new System.Drawing.Point(42, 379);
+            this.textToUser.Name = "textToUser";
+            this.textToUser.Size = new System.Drawing.Size(56, 20);
+            this.textToUser.TabIndex = 9;
+            // 
+            // labelPmessage
+            // 
+            this.labelPmessage.AutoSize = true;
+            this.labelPmessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelPmessage.Location = new System.Drawing.Point(104, 380);
+            this.labelPmessage.Name = "labelPmessage";
+            this.labelPmessage.Size = new System.Drawing.Size(98, 15);
+            this.labelPmessage.TabIndex = 10;
+            this.labelPmessage.Text = "Private Message";
+            // 
+            // textPrivateMessage
+            // 
+            this.textPrivateMessage.Enabled = false;
+            this.textPrivateMessage.Location = new System.Drawing.Point(208, 379);
+            this.textPrivateMessage.Name = "textPrivateMessage";
+            this.textPrivateMessage.Size = new System.Drawing.Size(147, 20);
+            this.textPrivateMessage.TabIndex = 11;
+            // 
+            // ChatRoom
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(329, 376);
+            this.ClientSize = new System.Drawing.Size(367, 409);
+            this.Controls.Add(this.textPrivateMessage);
+            this.Controls.Add(this.labelPmessage);
+            this.Controls.Add(this.textToUser);
+            this.Controls.Add(this.LableTo);
             this.Controls.Add(this.buttonSend);
             this.Controls.Add(this.textMegsse);
             this.Controls.Add(this.textChatLog);
@@ -128,7 +172,7 @@
             this.Controls.Add(this.textIPAddrass);
             this.Controls.Add(this.SeverIP);
             this.Controls.Add(this.buttonConnect);
-            this.Name = "PublicRoom";
+            this.Name = "ChatRoom";
             this.Text = "PublicRoom";
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -145,5 +189,9 @@
         private System.Windows.Forms.TextBox textChatLog;
         private System.Windows.Forms.TextBox textMegsse;
         private System.Windows.Forms.Button buttonSend;
+        private System.Windows.Forms.Label LableTo;
+        private System.Windows.Forms.TextBox textToUser;
+        private System.Windows.Forms.Label labelPmessage;
+        private System.Windows.Forms.TextBox textPrivateMessage;
     }
 }

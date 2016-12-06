@@ -93,6 +93,7 @@ namespace ChatSever.Logic
                     else
                     {
                         Server.SendMessage(currUser, strResponse);
+                        Console.WriteLine("[{0}] " + currUser + " sent a message", DateTime.Now);
                     }
                 }
             }
