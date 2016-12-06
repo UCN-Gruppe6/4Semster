@@ -38,8 +38,8 @@
             this.buttonSend = new System.Windows.Forms.Button();
             this.LableTo = new System.Windows.Forms.Label();
             this.textToUser = new System.Windows.Forms.TextBox();
-            this.labelPmessage = new System.Windows.Forms.Label();
             this.textPrivateMessage = new System.Windows.Forms.TextBox();
+            this.buttonPrivate = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // buttonConnect
@@ -104,16 +104,16 @@
             this.textMegsse.Enabled = false;
             this.textMegsse.Location = new System.Drawing.Point(15, 349);
             this.textMegsse.Name = "textMegsse";
-            this.textMegsse.Size = new System.Drawing.Size(248, 20);
+            this.textMegsse.Size = new System.Drawing.Size(242, 20);
             this.textMegsse.TabIndex = 6;
             // 
             // buttonSend
             // 
             this.buttonSend.Enabled = false;
             this.buttonSend.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonSend.Location = new System.Drawing.Point(269, 349);
+            this.buttonSend.Location = new System.Drawing.Point(263, 349);
             this.buttonSend.Name = "buttonSend";
-            this.buttonSend.Size = new System.Drawing.Size(86, 23);
+            this.buttonSend.Size = new System.Drawing.Size(92, 23);
             this.buttonSend.TabIndex = 7;
             this.buttonSend.Text = "Send";
             this.buttonSend.UseVisualStyleBackColor = true;
@@ -137,31 +137,33 @@
             this.textToUser.Size = new System.Drawing.Size(56, 20);
             this.textToUser.TabIndex = 9;
             // 
-            // labelPmessage
-            // 
-            this.labelPmessage.AutoSize = true;
-            this.labelPmessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelPmessage.Location = new System.Drawing.Point(104, 380);
-            this.labelPmessage.Name = "labelPmessage";
-            this.labelPmessage.Size = new System.Drawing.Size(98, 15);
-            this.labelPmessage.TabIndex = 10;
-            this.labelPmessage.Text = "Private Message";
-            // 
             // textPrivateMessage
             // 
             this.textPrivateMessage.Enabled = false;
-            this.textPrivateMessage.Location = new System.Drawing.Point(208, 379);
+            this.textPrivateMessage.Location = new System.Drawing.Point(104, 379);
             this.textPrivateMessage.Name = "textPrivateMessage";
-            this.textPrivateMessage.Size = new System.Drawing.Size(147, 20);
+            this.textPrivateMessage.Size = new System.Drawing.Size(153, 20);
             this.textPrivateMessage.TabIndex = 11;
+            // 
+            // buttonPrivate
+            // 
+            this.buttonPrivate.Enabled = false;
+            this.buttonPrivate.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonPrivate.Location = new System.Drawing.Point(263, 378);
+            this.buttonPrivate.Name = "buttonPrivate";
+            this.buttonPrivate.Size = new System.Drawing.Size(92, 24);
+            this.buttonPrivate.TabIndex = 12;
+            this.buttonPrivate.Text = "Send Prrivate";
+            this.buttonPrivate.UseVisualStyleBackColor = true;
+            this.buttonPrivate.Click += new System.EventHandler(this.buttonPrivate_Click);
             // 
             // ChatRoom
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(367, 409);
+            this.Controls.Add(this.buttonPrivate);
             this.Controls.Add(this.textPrivateMessage);
-            this.Controls.Add(this.labelPmessage);
             this.Controls.Add(this.textToUser);
             this.Controls.Add(this.LableTo);
             this.Controls.Add(this.buttonSend);
@@ -191,7 +193,7 @@
         private System.Windows.Forms.Button buttonSend;
         private System.Windows.Forms.Label LableTo;
         private System.Windows.Forms.TextBox textToUser;
-        private System.Windows.Forms.Label labelPmessage;
         private System.Windows.Forms.TextBox textPrivateMessage;
+        private System.Windows.Forms.Button buttonPrivate;
     }
 }

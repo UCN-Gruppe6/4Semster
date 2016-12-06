@@ -20,10 +20,8 @@ namespace ChatSever.Logic
         private StreamReader srReceiver;
         private StreamWriter swSender;
         private string currUser;
+        private string toUser;
         private string strResponse;
-
-        private BinaryWriter biWriter;
-        private BinaryReader biReader;
         
         // Stater en forbinlse og begynder at arkseteper bruger. 
         public Connection(TcpClient tcpCon)
@@ -47,9 +45,6 @@ namespace ChatSever.Logic
             swSender = new StreamWriter(tcpClient.GetStream());
 
             currUser = srReceiver.ReadLine();
-
-            biReader = new BinaryReader(tcpClient.GetStream());
-            biWriter = new BinaryWriter(tcpClient.GetStream());
 
             if (currUser != "")
             {
@@ -84,11 +79,17 @@ namespace ChatSever.Logic
             // Bliver ved med at vente på en besked fra clienten.
             try
             {
-                while((strResponse = srReceiver.ReadLine()) != "")
+                toUser = srReceiver.ReadLine();
+
+                while ((strResponse = srReceiver.ReadLine()) != "")
                 {
                     if (strResponse == null)
                     {
                         Server.RemoveUser(tcpClient);
+                    }
+                    else if(Server.users.Contains(toUser))
+                    {
+                        Server.SendPrivateMessage(currUser, strResponse, toUser);
                     }
                     else
                     {

@@ -139,7 +139,7 @@ namespace ChatSever.Logic
         }
 
         // Sender en private besked til en bestemt bruger. 
-        private static void SendPrivateMessage(string From, string Message, string strTo)
+        public static void SendPrivateMessage(string From, string Message, string strTo)
         {
             StreamWriter swSenderSender;
 
@@ -156,10 +156,8 @@ namespace ChatSever.Logic
                     continue;
                 }
 
-                if (users.Equals(strTo))
+                if(tcpClients[i].Equals(strTo))
                 {
-                    swSenderSender = new StreamWriter(tcpClients[i].GetStream());
-
                     try
                     {
                         swSenderSender = new StreamWriter(tcpClients[i].GetStream());

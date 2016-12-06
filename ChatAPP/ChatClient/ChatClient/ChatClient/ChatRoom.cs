@@ -136,14 +136,12 @@ namespace ChatClient
         // Sender beskeden ved at have kliket på knappen "Send". 
         private void buttonSend_Click(object sender, EventArgs e)
         {
-            if(textToUser.Text != "" && textPrivateMessage.Text != "")
-            {
-                SendPrivateMessage();
-            }
-            else
-            {
-                SendMessage();
-            }
+            SendMessage();
+        }
+
+        private void buttonPrivate_Click(object sender, EventArgs e)
+        {
+            SendPrivateMessage();
         }
 
         //Sender beskeden ved at have kliket enter.
@@ -173,10 +171,13 @@ namespace ChatClient
             if(textPrivateMessage.Lines.Length >= 1)
             {
                 swSender.WriteLine(textPrivateMessage.Text);
+                swSender.WriteLine(textToUser.Text);
                 swSender.Flush();
                 textPrivateMessage.Lines = null;
+                textToUser.Lines = null;
             }
             textPrivateMessage.Text = "";
+            textToUser.Text = "";
         }
 
         #endregion
