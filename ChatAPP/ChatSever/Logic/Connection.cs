@@ -90,6 +90,10 @@ namespace ChatSever.Logic
                     {
                         Server.RemoveUser(tcpClient);
                     }
+                    else
+                    {
+                        Server.SendMessage(currUser, strResponse);
+                    }
                 }
             }
             catch

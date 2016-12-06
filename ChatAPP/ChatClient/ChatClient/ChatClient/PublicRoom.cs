@@ -33,6 +33,7 @@ namespace ChatClient
 
         #endregion
 
+        // Knappen "Connect". Når der bliver trtkket forbender man sig til den ip addrasse man har skrivet.
         private void buttonConnect_Click(object sender, EventArgs e)
         {
             if(Connected == false)
@@ -116,7 +117,10 @@ namespace ChatClient
 
             while (Connected == true)
             {
-                this.Invoke(new UpdateLogCallback(this.UpdateLog), new object[] { srReceiver.ReadLine() });
+                if(srReceiver != null)
+                {
+                    this.Invoke(new UpdateLogCallback(this.UpdateLog), new object[] { srReceiver.ReadLine() });
+                }
             }
         }
 
@@ -131,7 +135,7 @@ namespace ChatClient
             SendMessage();
         }
 
-        // Sender beskeden ved at have kliket enter.
+        //Sender beskeden ved at have kliket enter.
         private void textMegsse_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)13)

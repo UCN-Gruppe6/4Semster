@@ -97,6 +97,7 @@
             // 
             // textMegsse
             // 
+            this.textMegsse.Enabled = false;
             this.textMegsse.Location = new System.Drawing.Point(15, 349);
             this.textMegsse.Name = "textMegsse";
             this.textMegsse.Size = new System.Drawing.Size(206, 20);
@@ -104,6 +105,7 @@
             // 
             // buttonSend
             // 
+            this.buttonSend.Enabled = false;
             this.buttonSend.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonSend.Location = new System.Drawing.Point(231, 347);
             this.buttonSend.Name = "buttonSend";

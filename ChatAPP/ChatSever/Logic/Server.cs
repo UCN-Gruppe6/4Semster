@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Net.Sockets;
+using System.Net.Sockets; 
 using System.Threading;
 using System.IO;
 using System.Collections;
@@ -57,11 +57,11 @@ namespace ChatSever.Logic
         {
             if (connections[tcpUser] != null)
             {
-                Console.WriteLine("[{0}] " + connections[tcpUser] + " has disconnected", DateTime.Now);
-                SendAdminMessage(connections[tcpUser] + " has left us");
-
                 users.Remove(connections[tcpUser]);
                 connections.Remove(tcpUser);
+
+                Console.WriteLine("[{0}] " + connections[tcpUser] + " has disconnected", DateTime.Now);
+                SendAdminMessage(connections[tcpUser] + " has left us");
             }
         }
 
