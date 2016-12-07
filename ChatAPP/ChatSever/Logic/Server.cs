@@ -138,10 +138,14 @@ namespace ChatSever.Logic
             }
         }
 
+        private static StreamReader swReader;
+
         // Sender en private besked til en bestemt bruger. 
         public static void SendPrivateMessage(string From, string Message, string strTo)
         {
             StreamWriter swSenderSender;
+
+            strTo = swReader.ReadLine();
 
             e = new StatusChangedEventArgs("To: " + strTo + " : " + Message);
             OnStatusChanged(e);

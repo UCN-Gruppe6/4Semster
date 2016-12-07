@@ -87,7 +87,7 @@ namespace ChatSever.Logic
                     {
                         Server.RemoveUser(tcpClient);
                     }
-                    else if(Server.users.Contains(toUser))
+                    if(Server.connections.Equals(toUser))
                     {
                         Server.SendPrivateMessage(currUser, strResponse, toUser);
                         Console.WriteLine("[{0}] " + currUser + " has sent a private message to " + toUser, DateTime.Now);
