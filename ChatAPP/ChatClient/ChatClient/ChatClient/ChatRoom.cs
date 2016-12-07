@@ -65,6 +65,7 @@ namespace ChatClient
             textToUser.Enabled = true;
             textPrivateMessage.Enabled = true;
             buttonSend.Enabled = true;
+            buttonPrivate.Enabled = true;
             buttonConnect.Text = "Disconnect";
 
             swSender = new StreamWriter(tcpServer.GetStream());
@@ -86,6 +87,7 @@ namespace ChatClient
             textPrivateMessage.Enabled = false;
             textToUser.Enabled = false;
             buttonSend.Enabled = false;
+            buttonPrivate.Enabled = false;
             buttonConnect.Text = "Connect";
 
             // Lukker alle forbendlser.
@@ -142,15 +144,6 @@ namespace ChatClient
         private void buttonPrivate_Click(object sender, EventArgs e)
         {
             SendPrivateMessage();
-        }
-
-        //Sender beskeden ved at have kliket enter.
-        private void textMegsse_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == (char)13)
-            {
-                SendMessage();
-            }
         }
 
         // Den besked der bliver sendt.

@@ -90,6 +90,7 @@ namespace ChatSever.Logic
                     else if(Server.users.Contains(toUser))
                     {
                         Server.SendPrivateMessage(currUser, strResponse, toUser);
+                        Console.WriteLine("[{0}] " + currUser + " has sent a private message to " + toUser, DateTime.Now);
                     }
                     else
                     {
