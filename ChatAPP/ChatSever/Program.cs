@@ -7,11 +7,14 @@ using System.Net;
 using System.Net.Sockets;
 using System.IO;
 using ChatSever.Logic;
+using System.Security.Cryptography.X509Certificates;
+using System.Collections.ObjectModel;
 
 namespace ChatSever
 {
     public class Program
     {
+        public X509Certificate2 cert = new X509Certificate2("server.pfx", "instant");
 
         // Stater serveren.
         public static void Main(string[] args)

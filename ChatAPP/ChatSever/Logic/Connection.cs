@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net;
 using System.Net.Sockets;
+using System.Net.Security;
+using System.Security.Authentication;
 using System.Threading;
 using System.IO;
 using System.Collections;
@@ -12,17 +14,27 @@ using ChatSever.Logic;
 
 namespace ChatSever.Logic
 {
-    // Denne klasse håntere alle forbinlser. Der er en instens af Connection for vær bruger der er forbundet.  
+    // Denne klasse håntere alle forbinlser. Der er en instens af Connection for vær bruger der er forbundet.
+    // Det er også denne klasse der sender beskeder fram og tilbage.  
     public class Connection
     {
+        #region Fields and Properties
+
         TcpClient tcpClient;
         private Thread thrSender; // Den trød der sender data til clienten.
+
+        private NetworkStream netStream;
+        private SslStream ssl;
         private StreamReader srReceiver;
         private StreamWriter swSender;
+
         private string currUser;
-        private string toUser;
         private string strResponse;
-        
+
+        Program prog;
+
+        #endregion
+
         // Stater en forbinlse og begynder at arkseteper bruger. 
         public Connection(TcpClient tcpCon)
         {
@@ -41,8 +53,14 @@ namespace ChatSever.Logic
 
         private void AcceptClient()
         {
-            srReceiver = new StreamReader(tcpClient.GetStream());
-            swSender = new StreamWriter(tcpClient.GetStream());
+            Console.WriteLine("[{0}] New connection!", DateTime.Now);
+            netStream = tcpClient.GetStream();
+            ssl = new SslStream(netStream, false);
+            ssl.AuthenticateAsServer(prog.cert, false, SslProtocols.Tls, true);
+            Console.WriteLine("[{0}] Connection authenticated!", DateTime.Now);
+
+            srReceiver = new StreamReader(ssl, Encoding.UTF8);
+            swSender = new StreamWriter(ssl, Encoding.UTF8);
 
             currUser = srReceiver.ReadLine();
 
@@ -80,17 +98,12 @@ namespace ChatSever.Logic
             try
             {
 
-                while ((strResponse = srReceiver.ReadLine()) != "" || (toUser = srReceiver.ReadLine()) == "")
+                while ((strResponse = srReceiver.ReadLine()) != "")
                 {
                     if (strResponse == null)
                     {
                         Server.RemoveUser(tcpClient);
                     }
-                    //if(Server.connections.Contains(toUser))
-                    //{
-                    //    Server.SendPrivateMessage(currUser, strResponse, toUser);
-                    //    Console.WriteLine("[{0}] " + currUser + " has sent a private message to " + toUser, DateTime.Now);
-                    //}
                     else
                     {
                         Server.SendMessage(currUser, strResponse);

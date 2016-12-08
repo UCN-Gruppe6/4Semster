@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Net.Sockets; 
+using System.Net.Sockets;
+using System.Net.Security;
+using System.Security.Authentication;
 using System.Threading;
 using System.IO;
 using System.Collections;
 using System.Text;
 using System.Threading.Tasks;
 using ChatSever.Logic;
+
 
 namespace ChatSever.Logic
 {
@@ -20,11 +23,13 @@ namespace ChatSever.Logic
     {
         #region Fields and Properties
 
-        // Serveren's ip addrasse. IP addrassen på den pc der er server. 
+        // Serveren's ip addrasse og det port nummer vi bruger. IP addrassen på den pc der er server. 
         private IPAddress severIP = IPAddress.Parse("127.0.0.1");
         private int port = 8000;
         private TcpListener sever;
-        private bool severRunning = false;
+        
+        // Holder styr på om severn køre eller ikke.
+        private bool severRunning = false; 
 
         // Dette her er til at holde forbundet bruger og forbindlser. 
         public static Hashtable users = new Hashtable(5);
@@ -35,6 +40,10 @@ namespace ChatSever.Logic
 
         public static event StatusChangedEventHandler StatusChanged;
         private static StatusChangedEventArgs e;
+
+        private static StreamWriter swSenderSender;
+        private NetworkStream netStream;
+        private SslStream ssl;
 
         #endregion
 
@@ -77,13 +86,11 @@ namespace ChatSever.Logic
         // Sender en adminstriv besked, hvem der er "logger på" og "logger af". 
         public static void SendAdminMessage(string Message)
         {
-            StreamWriter swSenderSender;
-
             e = new StatusChangedEventArgs("Administrator: " + Message);
             OnStatusChanged(e);
 
-            TcpClient[] tcpClients = new TcpClient[Server.users.Count];
-            Server.users.Values.CopyTo(tcpClients, 0);
+            TcpClient[] tcpClients = new TcpClient[users.Count];
+            users.Values.CopyTo(tcpClients, 0);
 
             for (int i = 0; i < tcpClients.Length; i++)
             {
@@ -109,13 +116,11 @@ namespace ChatSever.Logic
         // Sender en besked fra en bruger til alle andre.
         public static void SendMessage(string From, string Message)
         {
-            StreamWriter swSenderSender;
-
             e = new StatusChangedEventArgs(From + " says: " + Message);
             OnStatusChanged(e);
 
-            TcpClient[] tcpClients = new TcpClient[Server.users.Count];
-            Server.users.Values.CopyTo(tcpClients, 0);
+            TcpClient[] tcpClients = new TcpClient[users.Count];
+            users.Values.CopyTo(tcpClients, 0);
 
             for (int i = 0; i < tcpClients.Length; i++)
             {
@@ -137,41 +142,6 @@ namespace ChatSever.Logic
                 }
             }
         }
-
-        //Sender en private besked til en bestemt bruger.
-        //public static void SendPrivateMessage(string From, string Message, string strTo)
-        //{
-        //    StreamWriter swSenderSender;
-
-        //    e = new StatusChangedEventArgs("To: " + strTo + " : " + Message);
-        //    OnStatusChanged(e);
-
-        //    TcpClient[] tcpClients = new TcpClient[Server.users.Count];
-        //    Server.users.Values.CopyTo(tcpClients, 0);
-
-        //    for (int i = 0; i < tcpClients.Length; i++)
-        //    {
-        //        if ((Message.Trim() == "" || tcpClients[i] == null))
-        //        {
-        //            continue;
-        //        }
-
-        //        if (strTo != null)
-        //        {
-        //            try
-        //            {
-        //                swSenderSender = new StreamWriter(tcpClients[i].GetStream());
-        //                swSenderSender.WriteLine(From + ":" + Message);
-        //                swSenderSender.Flush();
-        //                swSenderSender = null;
-        //            }
-        //            catch
-        //            {
-        //                RemoveUser(tcpClients[i]);
-        //            }
-        //        }
-        //    }
-        //}
 
         #endregion
 
