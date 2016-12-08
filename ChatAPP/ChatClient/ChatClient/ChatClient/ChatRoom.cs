@@ -161,7 +161,7 @@ namespace ChatClient
         // Den private pesked der bliver sendt.
         private void SendPrivateMessage()
         {
-            if(textPrivateMessage.Lines.Length >= 1)
+            if(textPrivateMessage.Lines.Length >= 1 && textToUser.Lines.Length > 1)
             {
                 swSender.WriteLine(textPrivateMessage.Text);
                 swSender.WriteLine(textToUser.Text);

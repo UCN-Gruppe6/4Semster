@@ -79,19 +79,18 @@ namespace ChatSever.Logic
             // Bliver ved med at vente på en besked fra clienten.
             try
             {
-                toUser = srReceiver.ReadLine();
 
-                while ((strResponse = srReceiver.ReadLine()) != "")
+                while ((strResponse = srReceiver.ReadLine()) != "" || (toUser = srReceiver.ReadLine()) == "")
                 {
                     if (strResponse == null)
                     {
                         Server.RemoveUser(tcpClient);
                     }
-                    if(Server.connections.Equals(toUser))
-                    {
-                        Server.SendPrivateMessage(currUser, strResponse, toUser);
-                        Console.WriteLine("[{0}] " + currUser + " has sent a private message to " + toUser, DateTime.Now);
-                    }
+                    //if(Server.connections.Contains(toUser))
+                    //{
+                    //    Server.SendPrivateMessage(currUser, strResponse, toUser);
+                    //    Console.WriteLine("[{0}] " + currUser + " has sent a private message to " + toUser, DateTime.Now);
+                    //}
                     else
                     {
                         Server.SendMessage(currUser, strResponse);

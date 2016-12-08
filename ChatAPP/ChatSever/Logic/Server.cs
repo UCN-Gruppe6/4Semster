@@ -138,44 +138,40 @@ namespace ChatSever.Logic
             }
         }
 
-        private static StreamReader swReader;
+        //Sender en private besked til en bestemt bruger.
+        //public static void SendPrivateMessage(string From, string Message, string strTo)
+        //{
+        //    StreamWriter swSenderSender;
 
-        // Sender en private besked til en bestemt bruger. 
-        public static void SendPrivateMessage(string From, string Message, string strTo)
-        {
-            StreamWriter swSenderSender;
+        //    e = new StatusChangedEventArgs("To: " + strTo + " : " + Message);
+        //    OnStatusChanged(e);
 
-            strTo = swReader.ReadLine();
+        //    TcpClient[] tcpClients = new TcpClient[Server.users.Count];
+        //    Server.users.Values.CopyTo(tcpClients, 0);
 
-            e = new StatusChangedEventArgs("To: " + strTo + " : " + Message);
-            OnStatusChanged(e);
+        //    for (int i = 0; i < tcpClients.Length; i++)
+        //    {
+        //        if ((Message.Trim() == "" || tcpClients[i] == null))
+        //        {
+        //            continue;
+        //        }
 
-            TcpClient[] tcpClients = new TcpClient[Server.users.Count];
-            Server.users.Values.CopyTo(tcpClients, 0);
-
-            for(int i = 0; i < tcpClients.Length; i++)
-            {
-                if((Message.Trim() == "" || tcpClients[i] == null))
-                {
-                    continue;
-                }
-
-                if(tcpClients[i].Equals(strTo))
-                {
-                    try
-                    {
-                        swSenderSender = new StreamWriter(tcpClients[i].GetStream());
-                        swSenderSender.WriteLine(From + ":" + Message);
-                        swSenderSender.Flush();
-                        swSenderSender = null;
-                    }
-                    catch
-                    {
-                        RemoveUser(tcpClients[i]);
-                    }
-                }
-            }
-        }
+        //        if (strTo != null)
+        //        {
+        //            try
+        //            {
+        //                swSenderSender = new StreamWriter(tcpClients[i].GetStream());
+        //                swSenderSender.WriteLine(From + ":" + Message);
+        //                swSenderSender.Flush();
+        //                swSenderSender = null;
+        //            }
+        //            catch
+        //            {
+        //                RemoveUser(tcpClients[i]);
+        //            }
+        //        }
+        //    }
+        //}
 
         #endregion
 
