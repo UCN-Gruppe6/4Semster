@@ -9,12 +9,13 @@ using System.IO;
 using ChatSever.Logic;
 using System.Security.Cryptography.X509Certificates;
 using System.Collections.ObjectModel;
+using System.Runtime.Serialization;
 
 namespace ChatSever
 {
     public class Program
     {
-        public X509Certificate2 cert = new X509Certificate2("server.pfx", "instant");
+        public X509Certificate2 cert = new X509Certificate2("sever.pfx", "gruppe5");
 
         // Stater serveren.
         public static void Main(string[] args)

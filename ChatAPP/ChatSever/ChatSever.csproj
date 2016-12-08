@@ -37,10 +37,10 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>17A9ED79DB74677A607CB6E5FA969814A693BE47</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>0ACE45B2EC61259AE6742771722FCAE2F7E12719</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>server.pfx</ManifestKeyFile>
+    <ManifestKeyFile>ChatSever_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -63,7 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="server.pfx" />
+    <None Include="sever.pfx" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

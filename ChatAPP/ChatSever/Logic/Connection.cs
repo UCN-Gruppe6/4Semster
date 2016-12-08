@@ -49,6 +49,7 @@ namespace ChatSever.Logic
             tcpClient.Close();
             srReceiver.Close();
             swSender.Close();
+            netStream.Close();
         }
 
         private void AcceptClient()
