@@ -35,7 +35,8 @@ namespace ChatSever.Logic
 
         #endregion
 
-        // Stater en forbinlse og begynder at arkseteper bruger. 
+        // Stater en forbinlse og begynder at arkseteper bruger.
+        // Laver en ny tcpClient. 
         public Connection(TcpClient tcpCon)
         {
             tcpClient = tcpCon;
@@ -52,6 +53,7 @@ namespace ChatSever.Logic
             netStream.Close();
         }
 
+        // Arkseteper brugern og begynder at lytte efter trakfik og beskeder. 
         private void AcceptClient()
         {
             Console.WriteLine("[{0}] New connection!", DateTime.Now);
@@ -96,6 +98,7 @@ namespace ChatSever.Logic
             }
 
             // Bliver ved med at vente på en besked fra clienten.
+            // Sender også beskeder.
             try
             {
 
