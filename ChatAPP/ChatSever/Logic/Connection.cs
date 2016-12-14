@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Net;
 using System.Net.Sockets;
 using System.Net.Security;
 using System.Security.Authentication;
 using System.Threading;
 using System.IO;
-using System.Collections;
 using ChatSever.Logic;
+using System.Security.Cryptography.X509Certificates;
 
 namespace ChatSever.Logic
 {
@@ -31,8 +27,6 @@ namespace ChatSever.Logic
         private string currUser;
         private string strResponse;
 
-        Program prog;
-
         #endregion
 
         // Stater en forbinlse og begynder at arkseteper bruger.
@@ -51,11 +45,13 @@ namespace ChatSever.Logic
             srReceiver.Close();
             swSender.Close();
             netStream.Close();
+            ssl.Close();
         }
 
+        Program prog;
         // Arkseteper brugern og begynder at lytte efter trakfik og beskeder. 
         private void AcceptClient()
-        {
+        { 
             Console.WriteLine("[{0}] New connection!", DateTime.Now);
             netStream = tcpClient.GetStream();
             ssl = new SslStream(netStream, false);

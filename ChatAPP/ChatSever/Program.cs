@@ -1,22 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Net;
-using System.Net.Sockets;
-using System.IO;
 using ChatSever.Logic;
 using System.Security.Cryptography.X509Certificates;
-using System.Collections.ObjectModel;
-using System.Runtime.Serialization;
+using System.Net.Sockets;
+using System.Threading;
+using System.Net;
+
 
 namespace ChatSever
 {
     public class Program
     {
-        public X509Certificate2 cert = new X509Certificate2("sever.pfx", "gruppe5");
-
         // Stater serveren.
         public static void Main(string[] args)
         {
@@ -27,6 +20,8 @@ namespace ChatSever
             Console.ReadLine();
         }
 
+        public X509Certificate2 cert = new X509Certificate2(@"C:\Users\tinsf\Source\Repos\4Semster\ChatAPP\ChatSever\sever.pfx", "gruppe5");
+
         public Program()
         {
             Console.Title = "Simpel Chat APP";
@@ -36,7 +31,7 @@ namespace ChatSever
             //Laver en ny tcp listner til at lytte med.
             Server mainSever = new Server();
 
-            mainSever.StartListening(); 
+            mainSever.StartListening();
             Console.WriteLine("[{0}] Server is running properly and has statet listeners\n", DateTime.Now);
         }
     }

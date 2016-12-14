@@ -1,16 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Net.Security;
-using System.Security.Authentication;
 using System.Threading;
 using System.IO;
 using System.Collections;
 using System.Text;
-using System.Threading.Tasks;
-using ChatSever.Logic;
 
 
 namespace ChatSever.Logic
@@ -23,27 +18,24 @@ namespace ChatSever.Logic
     {
         #region Fields and Properties
 
-        // Serveren's ip addrasse og det port nummer vi bruger. IP addrassen på den pc der er server. 
         private IPAddress severIP = IPAddress.Parse("127.0.0.1");
         private int port = 8000;
         private TcpListener sever;
-        
-        // Holder styr på om severn køre eller ikke.
-        private bool severRunning = false; 
+        private bool severRunning = false;
+
+        private TcpClient client;
+        private Thread listener;
 
         // Dette her er til at holde forbundet bruger og forbindlser. 
         public static Hashtable users = new Hashtable(5);
         public static Hashtable connections = new Hashtable(5);
 
-        private TcpClient client;
-        private Thread listener;
-
         public static event StatusChangedEventHandler StatusChanged;
         private static StatusChangedEventArgs e;
 
         private static StreamWriter swSenderSender;
-        private NetworkStream netStream;
-        private SslStream ssl;
+        private static NetworkStream netStream;
+        private static SslStream ssl;
 
         #endregion
 
@@ -101,7 +93,9 @@ namespace ChatSever.Logic
                         continue;
                     }
 
-                    swSenderSender = new StreamWriter(tcpClients[i].GetStream());
+                    netStream = tcpClients[i].GetStream();
+                    ssl = new SslStream(netStream, true);
+                    swSenderSender = new StreamWriter(ssl, Encoding.UTF8);
                     swSenderSender.WriteLine("Administrator: " + Message);
                     swSenderSender.Flush();
                     swSenderSender = null;
@@ -131,7 +125,9 @@ namespace ChatSever.Logic
                         continue;
                     }
 
-                    swSenderSender = new StreamWriter(tcpClients[i].GetStream());
+                    netStream = tcpClients[i].GetStream();
+                    ssl = new SslStream(netStream, false);
+                    swSenderSender = new StreamWriter(ssl, Encoding.UTF8);
                     swSenderSender.WriteLine(From + " says: " + Message);
                     swSenderSender.Flush();
                     swSenderSender = null;

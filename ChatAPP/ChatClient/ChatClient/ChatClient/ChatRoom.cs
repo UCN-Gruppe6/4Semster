@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net;
 using System.Net.Sockets;
 using System.IO;
 using System.Threading;
+using System.Security.Cryptography.X509Certificates;
+using System.Net.Security;
 
 namespace ChatClient
 {
@@ -18,18 +14,25 @@ namespace ChatClient
     {
         #region Fields and Properties
 
+        // Sætter brugernavnet til at man er ukent.
         private string userName = "Unknown";
 
+        // Dette er det er bliver brugt til at sende data frem og tilbage
         private StreamWriter swSender;
         private StreamReader srReceiver;
+        private NetworkStream netStream;
+        private SslStream ssl;
+
+        // Sevren man er forbundet til.
         private TcpClient tcpServer;
 
+        // Bliver brugt til at opdater chat vinduet.
         private delegate void UpdateLogCallback(string strMessage);
         private delegate void CloseConnectionCallback(string strReason);
 
         private Thread thrMessaging;
         private IPAddress ipAddress;
-        private bool Connected;
+        private bool Connected; // holder styr på om vi er forbundet til severn.
 
         #endregion
 
@@ -51,9 +54,14 @@ namespace ChatClient
         // Laver forbenlsen til severn via IP addrass og Porten.
         private void InitializeConnection()
         {
+            // Forbindlse til severn og sørger for at forbendlsen er encrypted.
             ipAddress = IPAddress.Parse(textIPAddrass.Text);
             tcpServer = new TcpClient();
             tcpServer.Connect(ipAddress, 8000);
+
+            netStream = tcpServer.GetStream();
+            ssl = new SslStream(netStream, false, new RemoteCertificateValidationCallback(ValidateCert));
+            ssl.AuthenticateAsClient("ChatSever");
 
             Connected = true;
             userName = textUserName.Text;
@@ -62,13 +70,10 @@ namespace ChatClient
             textIPAddrass.Enabled = false;
             textUserName.Enabled = false;
             textMegsse.Enabled = true;
-            textToUser.Enabled = true;
-            textPrivateMessage.Enabled = true;
             buttonSend.Enabled = true;
-            buttonPrivate.Enabled = true;
             buttonConnect.Text = "Disconnect";
 
-            swSender = new StreamWriter(tcpServer.GetStream());
+            swSender = new StreamWriter(ssl, Encoding.UTF8);
             swSender.WriteLine(textUserName.Text);
             swSender.Flush();
 
@@ -84,10 +89,7 @@ namespace ChatClient
             textIPAddrass.Enabled = true;
             textUserName.Enabled = true;
             textMegsse.Enabled = false;
-            textPrivateMessage.Enabled = false;
-            textToUser.Enabled = false;
             buttonSend.Enabled = false;
-            buttonPrivate.Enabled = false;
             buttonConnect.Text = "Connect";
 
             // Lukker alle forbendlser.
@@ -95,9 +97,14 @@ namespace ChatClient
             swSender.Close();
             srReceiver.Close();
             tcpServer.Close();
+            netStream.Close();
             thrMessaging.Abort();
             srReceiver.Dispose();
             swSender.Dispose();
+            netStream.Dispose();
+            ssl.Close();
+            ssl.Dispose();
+            tcpServer.Close();
         }
 
         #endregion
@@ -106,7 +113,9 @@ namespace ChatClient
 
         private void ReceiveMessages()
         {
-            srReceiver = new StreamReader(tcpServer.GetStream());
+            netStream = tcpServer.GetStream();
+            srReceiver = new StreamReader(ssl, Encoding.UTF8);
+
             string ConResponse = srReceiver.ReadLine();
 
             if (ConResponse[0] == '1')
@@ -141,14 +150,10 @@ namespace ChatClient
             SendMessage();
         }
 
-        private void buttonPrivate_Click(object sender, EventArgs e)
-        {
-            SendPrivateMessage();
-        }
-
         // Den besked der bliver sendt.
         private void SendMessage()
         {
+            swSender = new StreamWriter(ssl, Encoding.UTF8);
             if(textMegsse.Lines.Length >= 1)
             {
                 swSender.WriteLine(textMegsse.Text);
@@ -156,21 +161,6 @@ namespace ChatClient
                 textMegsse.Lines = null;
             }
             textMegsse.Text = "";
-        }
-
-        // Den private pesked der bliver sendt.
-        private void SendPrivateMessage()
-        {
-            if(textPrivateMessage.Lines.Length >= 1 && textToUser.Lines.Length > 1)
-            {
-                swSender.WriteLine(textPrivateMessage.Text);
-                swSender.WriteLine(textToUser.Text);
-                swSender.Flush();
-                textPrivateMessage.Lines = null;
-                textToUser.Lines = null;
-            }
-            textPrivateMessage.Text = "";
-            textToUser.Text = "";
         }
 
         #endregion
@@ -182,6 +172,7 @@ namespace ChatClient
         }
 
         // Bliver brugt hvis brugeren lukker programmet ned uden at have trykket "Disconnect".
+        // Trykker på "X"
         public void OnApplicationExit(object sender, EventArgs e)
         {
             if (Connected == true)
@@ -190,10 +181,25 @@ namespace ChatClient
                 swSender.Close();
                 srReceiver.Close();
                 tcpServer.Close();
+                netStream.Close();
                 thrMessaging.Abort();
                 srReceiver.Dispose();
                 swSender.Dispose();
+                netStream.Dispose();
+                ssl.Close();
+                ssl.Dispose();
             }
+        }
+
+        public static bool ValidateCert(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
+        {
+            // De her linger kan udkometeres hvis man vil gøre sådan at man ikke tilader untrusted certificates. 
+            //if (sslPolicyErrors == SslPolicyErrors.None)
+            //    return true;
+            //else
+            //    return false;
+
+            return true; // tillader untrusted certificates.
         }
     }
 }

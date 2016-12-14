@@ -36,10 +36,6 @@
             this.textChatLog = new System.Windows.Forms.TextBox();
             this.textMegsse = new System.Windows.Forms.TextBox();
             this.buttonSend = new System.Windows.Forms.Button();
-            this.LableTo = new System.Windows.Forms.Label();
-            this.textToUser = new System.Windows.Forms.TextBox();
-            this.textPrivateMessage = new System.Windows.Forms.TextBox();
-            this.buttonPrivate = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // buttonConnect
@@ -119,53 +115,11 @@
             this.buttonSend.UseVisualStyleBackColor = true;
             this.buttonSend.Click += new System.EventHandler(this.buttonSend_Click);
             // 
-            // LableTo
-            // 
-            this.LableTo.AutoSize = true;
-            this.LableTo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LableTo.Location = new System.Drawing.Point(12, 380);
-            this.LableTo.Name = "LableTo";
-            this.LableTo.Size = new System.Drawing.Size(24, 15);
-            this.LableTo.TabIndex = 8;
-            this.LableTo.Text = "To:";
-            // 
-            // textToUser
-            // 
-            this.textToUser.Enabled = false;
-            this.textToUser.Location = new System.Drawing.Point(42, 379);
-            this.textToUser.Name = "textToUser";
-            this.textToUser.Size = new System.Drawing.Size(56, 20);
-            this.textToUser.TabIndex = 9;
-            // 
-            // textPrivateMessage
-            // 
-            this.textPrivateMessage.Enabled = false;
-            this.textPrivateMessage.Location = new System.Drawing.Point(104, 379);
-            this.textPrivateMessage.Name = "textPrivateMessage";
-            this.textPrivateMessage.Size = new System.Drawing.Size(153, 20);
-            this.textPrivateMessage.TabIndex = 11;
-            // 
-            // buttonPrivate
-            // 
-            this.buttonPrivate.Enabled = false;
-            this.buttonPrivate.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonPrivate.Location = new System.Drawing.Point(263, 378);
-            this.buttonPrivate.Name = "buttonPrivate";
-            this.buttonPrivate.Size = new System.Drawing.Size(92, 24);
-            this.buttonPrivate.TabIndex = 12;
-            this.buttonPrivate.Text = "Send Prrivate";
-            this.buttonPrivate.UseVisualStyleBackColor = true;
-            this.buttonPrivate.Click += new System.EventHandler(this.buttonPrivate_Click);
-            // 
             // ChatRoom
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(367, 409);
-            this.Controls.Add(this.buttonPrivate);
-            this.Controls.Add(this.textPrivateMessage);
-            this.Controls.Add(this.textToUser);
-            this.Controls.Add(this.LableTo);
+            this.ClientSize = new System.Drawing.Size(367, 376);
             this.Controls.Add(this.buttonSend);
             this.Controls.Add(this.textMegsse);
             this.Controls.Add(this.textChatLog);
@@ -191,9 +145,5 @@
         private System.Windows.Forms.TextBox textChatLog;
         private System.Windows.Forms.TextBox textMegsse;
         private System.Windows.Forms.Button buttonSend;
-        private System.Windows.Forms.Label LableTo;
-        private System.Windows.Forms.TextBox textToUser;
-        private System.Windows.Forms.TextBox textPrivateMessage;
-        private System.Windows.Forms.Button buttonPrivate;
     }
 }
